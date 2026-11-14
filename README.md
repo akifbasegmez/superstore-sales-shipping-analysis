@@ -1,54 +1,81 @@
 # Superstore Sales & Shipping Analysis
 
-A Tableau business intelligence project examining **sales trends, profitability, and order-to-shipment performance** using the Sample Superstore dataset (2020–2023).
+## Project Overview
 
-**[Explore the Interactive Dashboard on Tableau Public](https://public.tableau.com/views/SuperstoreSalesShippingAnalysis_17946629183810/GnderimPerformans)**
+This project analyzes **sales, profitability, and order-to-shipment performance** using the Sample Superstore dataset for **2020–2023**. The objective is to explore commercial performance over time, compare profit margins across product groups, and identify differences in shipping patterns across the United States.
 
-![Shipping Performance Dashboard](assets/shipping-performance.png)
+An interactive Tableau dashboard brings together key performance indicators (KPIs), shipping-method comparisons, order distributions, and a geographic view of processing times.
 
-## Project Objectives
+**[View the interactive dashboard on Tableau Public](https://public.tableau.com/views/SuperstoreSalesShippingAnalysis_17946629183810/GnderimPerformans)**
 
-- Track monthly sales and profit trends to identify performance changes over time.
-- Compare profitability across product categories, subcategories, and shipping methods.
-- Evaluate order processing time and shipping patterns across US states.
+![Superstore Shipping Performance Dashboard](assets/shipping-performance.png)
 
-## Key Metrics
+## Tools and Technologies
 
-| Metric | Result |
+- **Tableau Public:** Data visualization, dashboard development, and interactive filtering
+- **Calculated Fields:** Custom business metrics and derived date measures
+- **Dual-Axis Time Series:** Monthly sales and profit comparisons
+- **DATEDIFF, COUNTD, SUM, AVG:** Shipping-time, distinct-order, profitability, and average calculations
+- **Geographic Mapping:** State-level shipping performance visualization
+
+## Analysis Process
+
+### 1. Sales and Profit Trends
+- Analyzed monthly sales and profit performance from 2020 through 2023.
+- Built dual-axis line charts to compare both metrics over time.
+- Added customer segment and shipping method filters for focused analysis.
+
+### 2. Profitability Analysis
+- Calculated profit margin using total profit divided by total sales, with a zero-sales check.
+- Compared profitability by **Category**, **Sub-Category**, and **Ship Mode**.
+- Used a diverging color scale and subtotals to highlight negative and positive margins.
+
+### 3. Shipping Performance Analysis
+- Calculated days between **Order Date** and **Ship Date** using Tableau's `DATEDIFF` function.
+- Analyzed average processing time by shipping method and distinct-order counts by shipping-day interval.
+- Mapped average order-to-ship time across US states and built an interactive dashboard with date, segment, and ship mode filters.
+
+## Key Results
+
+| KPI | Result |
 | --- | ---: |
-| Total unique orders | **5,009** |
+| Total orders (distinct) | **5,009** |
 | Average order-to-ship time | **3.96 days** |
 | Same-day shipping rate | **5.03%** |
-| Most common order-to-ship time | **4 days (1,401 orders)** |
+| Most frequent shipping interval | **4 days — 1,401 orders** |
 
-## Analysis & Methods
+**Additional observations:** Standard Class had the longest average order-to-ship time (**5.01 days**), compared with **3.24 days** for Second Class and **2.18 days** for First Class.
 
-- **Sales and profit trends:** Created monthly dual-axis time-series charts to compare sales and profit, with filters for customer segment and shipping method.
-- **Profitability analysis:** Built a color-coded comparison by category, subcategory, and ship mode using a calculated **profit margin** measure.
-- **Shipping analysis:** Used Tableau calculated fields and aggregations to measure shipping time, count distinct orders by processing-day bucket, and compare average times across shipping methods.
-- **Geographic analysis:** Visualized average order-to-ship time by US state on an interactive map, with date, segment, and ship mode filters.
-
-### Core Calculations
+## Selected Tableau Calculations
 
 ```tableau
-// Order-to-ship time
+// Order-to-ship time (days)
 DATEDIFF('day', [Order Date], [Ship Date])
 
 // Profit margin
-SUM([Profit]) / SUM([Sales])
+IF SUM([Sales]) != 0 THEN
+    SUM([Profit]) / SUM([Sales])
+END
 
 // Distinct order count
 COUNTD([Order ID])
+
+// Same-day shipping rate
+COUNTD(IF [Shipping Time (Days)] = 0 THEN [Order ID] END)
+/
+COUNTD([Order ID])
 ```
 
-The profit-margin calculation includes a zero-sales check in the workbook. Same-day shipping rate is calculated as distinct orders shipped on the order date divided by total distinct orders.
+## Project Deliverables
 
-## Tools & Project Files
+| File | Description |
+| --- | --- |
+| [Tableau Workbook](tableau/Superstore-Sales-Shipping-Analysis.twbx) | Packaged Tableau workbook with worksheets, calculated fields, and dashboard |
+| [Dashboard Preview](assets/shipping-performance.png) | Image of the interactive Shipping Performance dashboard |
+| [Live Dashboard](https://public.tableau.com/views/SuperstoreSalesShippingAnalysis_17946629183810/GnderimPerformans) | Published dashboard on Tableau Public |
 
-**Tools:** Tableau Public · Calculated Fields · Dual-Axis Charts · Geographic Maps · Interactive Filters
+## Data Source
 
-- [Tableau packaged workbook (.twbx)](tableau/Superstore-Sales-Shipping-Analysis.twbx)
-- [Dashboard screenshot (.png)](assets/shipping-performance.png)
-- [Sample Superstore dataset](https://docs.google.com/spreadsheets/d/1B6NRip0PBVx9uUgYYUO6iczNwOnSJCPO/edit?gid=580066455#gid=580066455)
+[Sample Superstore dataset](https://docs.google.com/spreadsheets/d/1B6NRip0PBVx9uUgYYUO6iczNwOnSJCPO/edit?gid=580066455#gid=580066455)
 
-> **Metric definition:** Shipping time measures the number of days between order date and ship date; it does not measure final customer delivery time.
+**Metric definition:** Shipping time represents the period from order placement to shipment, **not** the final delivery time to the customer.

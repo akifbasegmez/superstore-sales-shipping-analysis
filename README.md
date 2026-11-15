@@ -8,7 +8,6 @@ An interactive Tableau dashboard brings together key performance indicators (KPI
 
 **[View the interactive dashboard on Tableau Public](https://public.tableau.com/views/SuperstoreSalesShippingAnalysis_17946629183810/GnderimPerformans)**
 
-![Superstore Shipping Performance Dashboard](assets/shipping-performance.png)
 
 ## Tools and Technologies
 
@@ -25,15 +24,21 @@ An interactive Tableau dashboard brings together key performance indicators (KPI
 - Built dual-axis line charts to compare both metrics over time.
 - Added customer segment and shipping method filters for focused analysis.
 
+![Monthly Sales and Profit Analysis](assets/sales-profit.png)
+
 ### 2. Profitability Analysis
 - Calculated profit margin using total profit divided by total sales, with a zero-sales check.
 - Compared profitability by **Category**, **Sub-Category**, and **Ship Mode**.
 - Used a diverging color scale and subtotals to highlight negative and positive margins.
 
+![Profitability Analysis by Category, Sub-Category and Ship Mode](assets/profitability-analysis.png)
+
 ### 3. Shipping Performance Analysis
 - Calculated days between **Order Date** and **Ship Date** using Tableau's `DATEDIFF` function.
 - Analyzed average processing time by shipping method and distinct-order counts by shipping-day interval.
 - Mapped average order-to-ship time across US states and built an interactive dashboard with date, segment, and ship mode filters.
+
+![Shipping Performance Dashboard](assets/shipping-performance.png)
 
 ## Key Results
 
@@ -71,7 +76,9 @@ COUNTD([Order ID])
 | File | Description |
 | --- | --- |
 | [Tableau Workbook](tableau/Superstore-Sales-Shipping-Analysis.twbx) | Packaged Tableau workbook with worksheets, calculated fields, and dashboard |
-| [Dashboard Preview](assets/shipping-performance.png) | Image of the interactive Shipping Performance dashboard |
+| [Sales & Profit Screenshot](assets/sales-profit.png) | Monthly sales and profit trends |
+| [Profitability Screenshot](assets/profitability-analysis.png) | Profit margins by category and shipping method |
+| [Shipping Performance Screenshot](assets/shipping-performance.png) | Shipping KPIs, order distributions, and US state map |
 | [Live Dashboard](https://public.tableau.com/views/SuperstoreSalesShippingAnalysis_17946629183810/GnderimPerformans) | Published dashboard on Tableau Public |
 
 ## Data Source
